@@ -7,12 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-//enlazar los datos de una lista de películas a
-// las vistas que se mostrarán en un RecyclerView
 class MovieAdapter(private val movies: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    //Una clase que contiene referencias a las vistas que se van a mostrar para cada item de la lista
+
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.movieTitle)
         val yearTextView: TextView = itemView.findViewById(R.id.movieYear)
@@ -26,16 +25,17 @@ class MovieAdapter(private val movies: List<Movie>) :
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
+
         holder.titleTextView.text = movie.Title
-        holder.yearTextView.text = movie.Year
+        holder.yearTextView.text = "Año: ${movie.Year}"
+
+        // Load image with Glide using fade animation
         Glide.with(holder.itemView.context)
             .load(movie.Poster)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .centerCrop()
             .into(holder.posterImageView)
     }
 
-    override fun getItemCount(): Int {
-        return movies.size
-    }
-
-
+    override fun getItemCount() = movies.size
 }
