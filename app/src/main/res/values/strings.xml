@@ -1,11 +1,4 @@
 <resources>
     <string name="app_name">apiPeliculas</string>
-    <string-array name="genres">
-        <item>Action</item>
-        <item>Comedy</item>
-        <item>Drama</item>
-        <item>Horror</item>
-        <item>Thriller</item>
-    </string-array>
 
 </resources>

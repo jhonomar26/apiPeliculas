@@ -9,6 +9,7 @@ object RetrofitClient {
     private const val BASE_URL = "https://www.omdbapi.com/"
 
     fun getRetrofit(): Retrofit {
+        //Objeto de tipo Json que se encarga de convertir json a objetos de tipo kotlin
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

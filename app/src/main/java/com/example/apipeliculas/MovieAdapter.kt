@@ -7,10 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-//Mostrar la lista de peliculas
+
+//enlazar los datos de una lista de películas a
+// las vistas que se mostrarán en un RecyclerView
 class MovieAdapter(private val movies: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-
+    //Una clase que contiene referencias a las vistas que se van a mostrar para cada item de la lista
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.movieTitle)
         val yearTextView: TextView = itemView.findViewById(R.id.movieYear)
@@ -34,7 +36,6 @@ class MovieAdapter(private val movies: List<Movie>) :
     override fun getItemCount(): Int {
         return movies.size
     }
-
 
 
 }

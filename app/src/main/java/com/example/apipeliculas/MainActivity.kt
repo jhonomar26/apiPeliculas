@@ -2,14 +2,12 @@ package com.example.apipeliculas
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -21,24 +19,31 @@ class MainActivity : AppCompatActivity() {
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchEditText: EditText
-    private lateinit var genreSpinner: Spinner
-    private lateinit var yearEditText: EditText  // Añadir EditText para año
-    private lateinit var directorEditText: EditText  // Añadir EditText para director
-    private lateinit var searchButton: Button  // Añadir botón de búsqueda
+    private lateinit var genreAutoCompleteTextView: AutoCompleteTextView  // Cambiado a AutoCompleteTextView
+    private lateinit var yearEditText: EditText
+    private lateinit var directorEditText: EditText
+    private lateinit var searchButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         searchEditText = findViewById(R.id.searchEditText)
-        genreSpinner = findViewById(R.id.genreSpinner)
-        yearEditText = findViewById(R.id.yearEditText)  // Inicializar EditText para año
-        directorEditText =
-            findViewById(R.id.directorEditText)  // Inicializar EditText para director
-        searchButton = findViewById(R.id.searchButton)  // Inicializar botón de búsqueda
+        genreAutoCompleteTextView =
+            findViewById(R.id.genreSpinner)  // Cambiado a AutoCompleteTextView
+        yearEditText = findViewById(R.id.yearEditText)
+        directorEditText = findViewById(R.id.directorEditText)
+        searchButton = findViewById(R.id.searchButton)
         recyclerView = findViewById(R.id.recyclerView)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Lista de géneros
+        val genres = listOf("All", "Action", "Comedy", "Drama", "Horror", "Sci-Fi")
+
+        // Adaptador para el AutoCompleteTextView
+        val genreAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, genres)
+        genreAutoCompleteTextView.setAdapter(genreAdapter)
 
         // Configurar el botón de búsqueda
         searchButton.setOnClickListener {
@@ -48,7 +53,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun searchMovies() {
         val query = searchEditText.text.toString()
-        val genre = genreSpinner.selectedItem.toString()
+        val genre =
+            genreAutoCompleteTextView.text.toString()  // Obtener texto del AutoCompleteTextView
         val year = yearEditText.text.toString()
         val director = directorEditText.text.toString()
 
@@ -59,20 +65,21 @@ class MainActivity : AppCompatActivity() {
                 val response = apiService.searchMovies(
                     "bf3b564c",
                     query,
+                    //null, es no tener en cuenta ese atrivula
                     genre = if (genre != "All") genre else null,
-                    year = if (year != "All") year else null,
-                    director = if (director != "All") director else null
+                    year = if (year.isNotBlank()) year else null,
+                    director = if (director.isNotBlank()) director else null
                 )
+                //Actualizacion de la interfaz de usuario
 
-                // Comprobar si la respuesta contiene datos
                 withContext(Dispatchers.Main) {
                     if (response.Search != null && response.Search.isNotEmpty()) {
+                        Log.e("", "" + response.Search)
                         movieAdapter = MovieAdapter(response.Search)
                         recyclerView.adapter = movieAdapter
                     } else {
                         Toast.makeText(this@MainActivity, "No movies found", Toast.LENGTH_SHORT)
                             .show()
-
                     }
                 }
             } catch (e: Exception) {

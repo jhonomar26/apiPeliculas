@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="Movie Search"
+        android:text="Movie or series search"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -22,16 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        app:startIconDrawable="@drawable/ic_search">
+       >
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
             android:hint="Search Movies"
-            android:inputType="text"
-            android:padding="16dp" />
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -40,12 +38,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp">
 
-        <Spinner
+        <AutoCompleteTextView
             android:id="@+id/genreSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/genres"
-            android:padding="16dp" />
+            android:hint="Select Genre"
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -61,15 +59,13 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/yearEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:hint="Year"
                 android:inputType="number"
-                android:maxLength="4"
-                android:padding="16dp" />
+                android:maxLength="4" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -79,25 +75,23 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/directorEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:hint="Director"
-                android:inputType="textPersonName"
-                android:padding="16dp" />
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/searchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimary"
         android:padding="12dp"
-        android:text="Search Movies"
-        android:textSize="16sp" />
+        android:text="Search"
+        android:textSize="16sp"
+        app:cornerRadius="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
