@@ -39,10 +39,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Lista de géneros
-        val genres = listOf("All", "Action", "Comedy", "Drama", "Horror", "Sci-Fi")
+        val types = listOf("all", "movie", "series", "episode")
 
         // Adaptador para el AutoCompleteTextView
-        val genreAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, genres)
+        val genreAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
         genreAutoCompleteTextView.setAdapter(genreAdapter)
 
         // Configurar el botón de búsqueda
@@ -53,20 +53,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun searchMovies() {
         val query = searchEditText.text.toString()
-        val genre =
+        val types =
             genreAutoCompleteTextView.text.toString()  // Obtener texto del AutoCompleteTextView
         val year = yearEditText.text.toString()
         val director = directorEditText.text.toString()
 
         val apiService = RetrofitClient.getMovieApiService()
+        val apiKey = getString(R.string.movie_api_key)
+
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = apiService.searchMovies(
-                    "bf3b564c",
+                    apiKey,
                     query,
-                    //null, es no tener en cuenta ese atrivula
-                    genre = if (genre != "All") genre else null,
+                    //null, es no tener en cuenta ese atributo
+                    type = if (types != "All") types else null,
                     year = if (year.isNotBlank()) year else null,
                     director = if (director.isNotBlank()) director else null
                 )

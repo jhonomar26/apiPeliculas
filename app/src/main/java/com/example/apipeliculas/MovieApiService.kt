@@ -12,7 +12,7 @@ interface MovieApiService {
         @Query("s") query: String,  // Búsqueda por título
         @Query("type") type: String? = null,  // Tipo (movie, series, etc.)
         @Query("y") year: String? = null,  // Filtro por año
-        @Query("genre") genre: String? = null,  // Filtro por género
+        @Query("r") responseFormat: String = "json", // Formato de respuesta (por defecto json)
         @Query("director") director: String? = null  // Filtro por director
     ): MovieResponse
 }
