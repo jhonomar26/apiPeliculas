@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class MovieAdapter(private val movies: List<Movie>) :
+class MovieAdapter(private var movies: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,12 +30,20 @@ class MovieAdapter(private val movies: List<Movie>) :
         holder.yearTextView.text = "Año: ${movie.Year}"
 
         // Load image with Glide using fade animation
-        Glide.with(holder.itemView.context)
-            .load(movie.Poster)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .centerCrop()
-            .into(holder.posterImageView)
+        if (movie.Poster.isNotEmpty()) {
+            Glide.with(holder.itemView.context)
+                .load(movie.Poster)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .centerCrop()
+                .into(holder.posterImageView)
+        }
     }
 
     override fun getItemCount() = movies.size
+
+    // Método para actualizar la lista de películas
+    fun updateMovies(newMovies: List<Movie>) {
+        movies = newMovies
+        notifyDataSetChanged() // Notifica al RecyclerView que los datos han cambiado
+    }
 }

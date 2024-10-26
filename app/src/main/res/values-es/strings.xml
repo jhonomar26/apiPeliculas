@@ -7,4 +7,15 @@
     <string name="director_hint">Director</string>
     <string name="search_button_text">Buscar Películas</string>
     <string name="movie_api_key">clave</string>
+    <string name="type_all">Todo</string>
+    <string name="type_movie">Película</string>
+    <string name="type_series">Serie</string>
+    <string name="type_episode">Episodio</string>
+    <string name="about">Acerca de</string>
+    <string name="about_author">Desarrollado por Omar Hualpa</string>
+    <string name="about_info">Esta aplicación te permite buscar películas, proporcionando información detallada, incluyendo el género, año de lanzamiento y director. Impulsada por la API de OMDb.</string>
+    <string name="back_to_main">Volver</string>
+    <string name="develop">Desarrollada por  Omar Hualpa</string>
+
+
 </resources>

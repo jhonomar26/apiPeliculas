@@ -1,5 +1,6 @@
 package com.example.apipeliculas
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -23,25 +24,30 @@ class MainActivity : AppCompatActivity() {
     private lateinit var yearEditText: EditText
     private lateinit var directorEditText: EditText
     private lateinit var searchButton: Button
+    private lateinit var aboutButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         searchEditText = findViewById(R.id.searchEditText)
-        genreAutoCompleteTextView =
-            findViewById(R.id.genreSpinner)  // Cambiado a AutoCompleteTextView
+        genreAutoCompleteTextView = findViewById(R.id.genreSpinner)
         yearEditText = findViewById(R.id.yearEditText)
         directorEditText = findViewById(R.id.directorEditText)
         searchButton = findViewById(R.id.searchButton)
         recyclerView = findViewById(R.id.recyclerView)
-
         recyclerView.layoutManager = LinearLayoutManager(this)
+        aboutButton = findViewById(R.id.aboutButton)
 
-        // Lista de géneros
-        val types = listOf("all", "movie", "series", "episode")
+        // Lista de géneros con internacionalización
+        val types = listOf(
+            getString(R.string.type_all),
+            getString(R.string.type_movie),
+            getString(R.string.type_series),
+            getString(R.string.type_episode)
+        )
 
-        // Adaptador para el AutoCompleteTextView
+        // Configura el adaptador para el AutoCompleteTextView
         val genreAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
         genreAutoCompleteTextView.setAdapter(genreAdapter)
 
@@ -49,7 +55,14 @@ class MainActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             searchMovies()
         }
+
+        aboutButton.setOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+        }
+
     }
+
 
     private fun searchMovies() {
         val query = searchEditText.text.toString()
@@ -68,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                     apiKey,
                     query,
                     //null, es no tener en cuenta ese atributo
-                    type = if (types != "All") types else null,
+                    type = if (types != "All" && types != "Todo") types else null,
                     year = if (year.isNotBlank()) year else null,
                     director = if (director.isNotBlank()) director else null
                 )
@@ -82,6 +95,8 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this@MainActivity, "No movies found", Toast.LENGTH_SHORT)
                             .show()
+                        // Limpia el RecyclerView
+                        movieAdapter.updateMovies(emptyList())
                     }
                 }
             } catch (e: Exception) {

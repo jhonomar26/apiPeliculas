@@ -1,9 +1,20 @@
 <resources>
-    <string name="app_name">movie Search</string>
+    <string name="app_name">Movie search</string>
     <string name="search_movies">Search Movies</string>
     <string name="search_hint">Search Movies</string>
     <string name="select_genre">Select Genre</string>
     <string name="year_hint">Year</string>
     <string name="director_hint">Director</string>
     <string name="search_button_text">Search Movies</string>
+    <string name="type_all">All</string>
+    <string name="type_movie">Movie</string>
+    <string name="type_series">Series</string>
+    <string name="type_episode">Episode</string>
+    <string name="about">About</string>
+    <string name="develop">develop by Omar Hualpa</string>
+    <string name="about_info">This application allows you to search for movies, providing detailed information including genre, release year, and director. Powered by the OMDb API.</string>
+    <string name="about_author">"Developed by Omar Hualpa. "</string>
+    <string name="back_to_main">Back</string>
+
+
 </resources>
